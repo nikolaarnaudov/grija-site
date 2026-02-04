@@ -1,0 +1,92 @@
+# Copyright (C) 2024 HivePress
+# This file is distributed under the same license as the HivePress Blocks plugin.
+msgid ""
+msgstr ""
+"Project-Id-Version: HivePress Blocks 1.0.1\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/hivepress-blocks\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2024-09-16T21:45:08+00:00\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"X-Generator: WP-CLI 2.11.0\n"
+"X-Domain: hivepress-blocks\n"
+
+#. Plugin Name of the plugin
+#: hivepress-blocks.php
+msgid "HivePress Blocks"
+msgstr ""
+
+#. Description of the plugin
+#: hivepress-blocks.php
+msgid "A few useful blocks for HivePress themes."
+msgstr ""
+
+#. Author of the plugin
+#: hivepress-blocks.php
+msgid "HivePress"
+msgstr ""
+
+#. Author URI of the plugin
+#: hivepress-blocks.php
+msgid "https://hivepress.io/"
+msgstr ""
+
+#: includes/blocks/class-feature.php:44
+msgid "Feature"
+msgstr ""
+
+#: includes/blocks/class-feature.php:48
+msgid "Icon"
+msgstr ""
+
+#: includes/blocks/class-feature.php:56
+msgid "Caption"
+msgstr ""
+
+#: includes/blocks/class-posts.php:65
+msgid "Posts"
+msgstr ""
+
+#: includes/blocks/class-testimonials.php:59
+#: includes/configs/post-types.php:21
+#: includes/configs/post-types.php:27
+msgid "Testimonials"
+msgstr ""
+
+#: includes/configs/meta-boxes.php:20
+msgid "URL"
+msgstr ""
+
+#: includes/configs/meta-boxes.php:26
+msgid "Position"
+msgstr ""
+
+#: includes/configs/post-types.php:22
+msgid "Testimonial"
+msgstr ""
+
+#: includes/configs/post-types.php:23
+#: includes/configs/post-types.php:26
+msgid "Add Testimonial"
+msgstr ""
+
+#: includes/configs/post-types.php:24
+msgctxt "testimonial"
+msgid "Add New"
+msgstr ""
+
+#: includes/configs/post-types.php:25
+msgid "Edit Testimonial"
+msgstr ""
+
+#: includes/configs/post-types.php:28
+msgid "Search Testimonials"
+msgstr ""
+
+#: includes/configs/post-types.php:29
+#: includes/configs/post-types.php:30
+msgid "No testimonials found."
+msgstr ""

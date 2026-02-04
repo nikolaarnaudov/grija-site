@@ -1,0 +1,24 @@
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Docker
+# We generally WANT docker-compose.yml 
+# but if you had secret overrides:
+# docker-compose.override.yml
+
+# WordPress
+# Ignore wp-content/uploads if you have massive media files
+# wp-content/uploads/
+# Ignore cache plugins
+wp-content/cache/
+wp-content/et-cache/
+wp-content/w3tc-config/
+
+# PHP/Composer (if used later)
+vendor/

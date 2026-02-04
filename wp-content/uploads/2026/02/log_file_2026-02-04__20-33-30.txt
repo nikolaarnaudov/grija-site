@@ -1,0 +1,21 @@
+
+---Downloaded files---
+The import files for: ExpertHive were successfully downloaded!
+Initial max execution time = 30
+Files info:
+Site URL = http://localhost:8090
+Data file = /var/www/html/wp-content/uploads/2026/02/demo-content-import-file_2026-02-04__20-33-30.xml
+Widget file = /var/www/html/wp-content/uploads/2026/02/demo-widgets-import-file_2026-02-04__20-33-30.json
+Customizer file = /var/www/html/wp-content/uploads/2026/02/demo-customizer-import-file_2026-02-04__20-33-30.dat
+Redux files:
+not defined!
+
+---Importing widgets---
+Site (footer) : 
+
+Text - No Title - Imported
+Navigation Menu - Services - Imported
+Categories - Blog - Imported
+Navigation Menu - Social - Imported
+
+
