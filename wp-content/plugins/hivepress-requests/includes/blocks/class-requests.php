@@ -35,6 +35,13 @@ class Requests extends Block {
 	protected $number;
 
 	/**
+	 * Request category ID.
+	 *
+	 * @var int
+	 */
+	protected $category;
+
+	/**
 	 * Requests order.
 	 *
 	 * @var string
@@ -59,7 +66,7 @@ class Requests extends Block {
 				'label'    => hivepress()->translator->get_string( 'requests' ),
 
 				'settings' => [
-					'columns' => [
+					'columns'  => [
 						'label'    => hivepress()->translator->get_string( 'columns_number' ),
 						'type'     => 'select',
 						'default'  => 1,
@@ -73,7 +80,7 @@ class Requests extends Block {
 						],
 					],
 
-					'number'  => [
+					'number'   => [
 						'label'     => hivepress()->translator->get_string( 'items_number' ),
 						'type'      => 'number',
 						'min_value' => 1,
@@ -82,11 +89,19 @@ class Requests extends Block {
 						'_order'    => 20,
 					],
 
-					'order'   => [
+					'category' => [
+						'label'       => hivepress()->translator->get_string( 'category' ),
+						'type'        => 'select',
+						'options'     => 'terms',
+						'option_args' => [ 'taxonomy' => 'hp_request_category' ],
+						'_order'      => 30,
+					],
+
+					'order'    => [
 						'label'    => hivepress()->translator->get_string( 'sort_order' ),
 						'type'     => 'select',
 						'required' => true,
-						'_order'   => 40,
+						'_order'   => 200,
 
 						'options'  => [
 							'created_date' => hivepress()->translator->get_string( 'by_date_added' ),
@@ -161,7 +176,18 @@ class Requests extends Block {
 						[
 							'status' => 'publish',
 						]
-					)->limit( $this->number );
+					)->limit( $this->number )
+					->set_args(
+						hivepress()->attribute->get_query_args(
+							'request',
+							array_diff_key( $this->get_args(), get_object_vars( $this ) )
+						)
+					);
+
+					// Set category.
+					if ( $this->category ) {
+						$requests->filter( [ 'categories__in' => $this->category ] );
+					}
 
 					// Set order.
 					if ( 'random' === $this->order ) {

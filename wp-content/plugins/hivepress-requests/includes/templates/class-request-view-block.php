@@ -79,10 +79,16 @@ class Request_View_Block extends Template {
 										],
 
 										'blocks'     => [
+											'request_category' => [
+												'type'   => 'part',
+												'path'   => 'request/view/request-categories',
+												'_order' => 10,
+											],
+
 											'request_created_date' => [
 												'type'   => 'part',
 												'path'   => 'request/view/request-created-date',
-												'_order' => 10,
+												'_order' => 20,
 											],
 										],
 									],
@@ -91,6 +97,14 @@ class Request_View_Block extends Template {
 										'type'   => 'part',
 										'path'   => 'request/view/block/request-attributes-secondary',
 										'_order' => 30,
+									],
+
+									'request_attributes_ternary' => [
+										'type'   => 'attributes',
+										'model'  => 'request',
+										'alias'  => 'listing',
+										'area'   => 'view_block_ternary',
+										'_order' => 40,
 									],
 								],
 							],

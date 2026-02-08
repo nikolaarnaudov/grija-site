@@ -75,11 +75,18 @@ class Request_View_Page extends Page_Sidebar_Right {
 								],
 
 								'blocks'     => [
+									'request_category'     => [
+										'type'   => 'part',
+										'path'   => 'request/view/request-categories',
+										'_label' => hivepress()->translator->get_string( 'category' ),
+										'_order' => 10,
+									],
+
 									'request_created_date' => [
 										'type'   => 'part',
 										'path'   => 'request/view/request-created-date',
 										'_label' => hivepress()->translator->get_string( 'date' ),
-										'_order' => 10,
+										'_order' => 20,
 									],
 								],
 							],
@@ -98,11 +105,21 @@ class Request_View_Page extends Page_Sidebar_Right {
 								'_order' => 40,
 							],
 
+							'request_attributes_ternary'   => [
+								'type'      => 'attributes',
+								'model'     => 'request',
+								'alias'     => 'listing',
+								'area'      => 'view_page_ternary',
+								'_label'    => hivepress()->translator->get_string( 'attributes' ) . ' (' . hivepress()->translator->get_string( 'ternary_plural' ) . ')',
+								'_settings' => [ 'columns' ],
+								'_order'    => 50,
+							],
+
 							'request_description'          => [
 								'type'   => 'part',
 								'path'   => 'request/view/page/request-description',
 								'_label' => hivepress()->translator->get_string( 'description' ),
-								'_order' => 50,
+								'_order' => 60,
 							],
 
 							'offers_container'             => [

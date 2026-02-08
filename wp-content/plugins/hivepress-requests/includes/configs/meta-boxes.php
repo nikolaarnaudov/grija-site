@@ -16,7 +16,7 @@ return [
 		'screen' => 'request',
 		'model'  => 'request',
 		'fields' => [
-			'user'   => [
+			'user'         => [
 				'label'    => hivepress()->translator->get_string( 'user' ),
 				'type'     => 'select',
 				'options'  => 'users',
@@ -26,7 +26,7 @@ return [
 				'_order'   => 10,
 			],
 
-			'vendor' => [
+			'vendor'       => [
 				'label'       => hivepress()->translator->get_string( 'vendor' ),
 				'type'        => 'select',
 				'options'     => 'posts',
@@ -35,6 +35,14 @@ return [
 				'disabled'    => true,
 				'_alias'      => 'post_parent',
 				'_order'      => 20,
+			],
+
+			'expired_time' => [
+				'label'       => hivepress()->translator->get_string( 'expiration_date' ),
+				'description' => esc_html__( 'Set a date on which the request will expire.', 'hivepress-requests' ),
+				'type'        => 'date',
+				'format'      => 'U',
+				'_order'      => 30,
 			],
 		],
 	],

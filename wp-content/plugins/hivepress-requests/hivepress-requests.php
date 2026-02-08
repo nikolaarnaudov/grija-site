@@ -2,7 +2,7 @@
 /**
  * Plugin Name: HivePress Requests
  * Description: Allow users to post requests and receive offers.
- * Version: 1.2.3
+ * Version: 1.2.5
  * Author: HivePress
  * Author URI: https://hivepress.io/
  * Text Domain: hivepress-requests
@@ -17,7 +17,7 @@ defined( 'ABSPATH' ) || exit;
 // Register extension directory.
 add_filter(
 	'hivepress/v1/extensions',
-	function( $extensions ) {
+	function ( $extensions ) {
 		$extensions[] = __DIR__;
 
 		return $extensions;

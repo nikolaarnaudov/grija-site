@@ -12,10 +12,8 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'request_category' => [
-		'post_type'         => [ 'request', 'request_attribute' ],
+		'post_type'         => [ 'request' ],
 		'hierarchical'      => true,
-		'public'            => false,
-		'show_ui'           => true,
 		'show_admin_column' => true,
 		'rewrite'           => [ 'slug' => 'request-category' ],
 

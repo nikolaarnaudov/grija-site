@@ -12,13 +12,15 @@ defined( 'ABSPATH' ) || exit;
 
 return [
 	'request' => [
-		'public'      => true,
-		'has_archive' => true,
-		'supports'    => [ 'title', 'editor' ],
-		'menu_icon'   => 'dashicons-format-chat',
-		'rewrite'     => [ 'slug' => 'request' ],
+		'public'              => true,
+		'has_archive'         => true,
+		'exclude_from_search' => true,
+		'delete_with_user'    => true,
+		'supports'            => [ 'title', 'editor' ],
+		'menu_icon'           => 'dashicons-format-chat',
+		'rewrite'             => [ 'slug' => 'request' ],
 
-		'labels'      => [
+		'labels'              => [
 			'name'               => hivepress()->translator->get_string( 'requests' ),
 			'singular_name'      => hivepress()->translator->get_string( 'request' ),
 			'add_new_item'       => hivepress()->translator->get_string( 'add_request' ),

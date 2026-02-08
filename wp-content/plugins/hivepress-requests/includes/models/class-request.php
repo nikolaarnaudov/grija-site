@@ -132,7 +132,7 @@ class Request extends Post {
 	final public function _get_fields( $area = null ) {
 		return array_filter(
 			$this->fields,
-			function( $field ) use ( $area ) {
+			function ( $field ) use ( $area ) {
 				return ! $area || in_array( $area, (array) $field->get_arg( '_display_areas' ), true );
 			}
 		);
@@ -152,8 +152,11 @@ class Request extends Post {
 			if ( is_null( $image_ids ) ) {
 				$image_ids = [];
 
+				// Get image IDs.
+				$fallback = get_option( 'hp_installed_time' ) < strtotime( '2024-07-08' );
+
 				foreach ( get_attached_media( 'image', $this->id ) as $image ) {
-					if ( ! $image->hp_parent_field || 'images' === $image->hp_parent_field ) {
+					if ( 'images' === $image->hp_parent_field || ( $fallback && ! $image->hp_parent_field ) ) {
 						$image_ids[] = $image->ID;
 					}
 				}

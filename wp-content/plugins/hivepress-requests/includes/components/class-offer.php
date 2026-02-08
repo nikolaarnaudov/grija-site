@@ -78,6 +78,10 @@ final class Offer extends Component {
 
 		if ( is_admin() ) {
 
+			// Manage admin columns.
+			add_filter( 'manage_hp_request_posts_columns', [ $this, 'add_request_admin_columns' ] );
+			add_action( 'manage_hp_request_posts_custom_column', [ $this, 'render_request_admin_columns' ], 10, 2 );
+
 			// Hide draft offers.
 			add_filter( 'comments_clauses', [ $this, 'hide_draft_offers' ] );
 
@@ -87,7 +91,7 @@ final class Offer extends Component {
 		} else {
 
 			// Set request context.
-			add_action( 'init', [ $this, 'set_request_context' ], 100 );
+			add_filter( 'hivepress/v1/components/request/context', [ $this, 'set_request_context' ] );
 
 			// Allow request access.
 			add_filter( 'user_has_cap', [ $this, 'allow_request_access' ], 10, 3 );
@@ -191,40 +195,38 @@ final class Offer extends Component {
 	 * Checks requests.
 	 */
 	public function check_requests() {
-		if ( get_option( 'hp_request_expiration_period' ) ) {
 
-			// Get expired requests.
-			$expired_requests = Models\Request::query()->filter(
-				[
-					'status__in'        => [ 'private', 'publish' ],
-					'expired_time__lte' => time(),
-				]
-			)->get();
+		// Get expired requests.
+		$expired_requests = Models\Request::query()->filter(
+			[
+				'status__in'        => [ 'private', 'publish' ],
+				'expired_time__lte' => time(),
+			]
+		)->get();
 
-			// Update expired requests.
-			foreach ( $expired_requests as $request ) {
-				if ( $request->get_status() === 'publish' || $request->get_vendor__id() ) {
+		// Update expired requests.
+		foreach ( $expired_requests as $request ) {
+			if ( $request->get_status() === 'publish' || $request->get_vendor__id() ) {
 
-					// Delete request.
-					$request->trash();
+				// Delete request.
+				$request->trash();
 
-					// Send email.
-					$user = $request->get_user();
+				// Send email.
+				$user = $request->get_user();
 
-					if ( $user ) {
-						( new Emails\Request_Expire(
-							[
-								'recipient' => $user->get_email(),
+				if ( $user ) {
+					( new Emails\Request_Expire(
+						[
+							'recipient' => $user->get_email(),
 
-								'tokens'    => [
-									'user'          => $user,
-									'request'       => $request,
-									'user_name'     => $user->get_display_name(),
-									'request_title' => $request->get_title(),
-								],
-							]
-						) )->send();
-					}
+							'tokens'    => [
+								'user'          => $user,
+								'request'       => $request,
+								'user_name'     => $user->get_display_name(),
+								'request_title' => $request->get_title(),
+							],
+						]
+					) )->send();
 				}
 			}
 		}
@@ -775,6 +777,58 @@ final class Offer extends Component {
 	}
 
 	/**
+	 * Adds request admin columns.
+	 *
+	 * @param array $columns Columns.
+	 * @return array
+	 */
+	public function add_request_admin_columns( $columns ) {
+		return array_merge(
+			array_slice( $columns, 0, 2, true ),
+			[
+				'user' => hivepress()->translator->get_string( 'user' ),
+			],
+			array_slice( $columns, 2, null, true )
+		);
+	}
+
+	/**
+	 * Renders request admin columns.
+	 *
+	 * @param string $column Column name.
+	 * @param int    $request_id Request ID.
+	 */
+	public function render_request_admin_columns( $column, $request_id ) {
+		$output = '';
+
+		if ( 'user' === $column ) {
+
+			// Get user ID.
+			$user_id = get_post_field( 'post_author', $request_id );
+
+			if ( $user_id ) {
+
+				// Get user name.
+				$name = get_the_author_meta( 'user_login', $user_id );
+
+				// Get user URL.
+				$url = admin_url(
+					'user-edit.php?' . http_build_query(
+						[
+							'user_id' => $user_id,
+						]
+					)
+				);
+
+				// Render user link.
+				$output = '<a href="' . esc_url( $url ) . '">' . esc_html( $name ) . '</a>';
+			}
+		}
+
+		echo wp_kses_data( $output );
+	}
+
+	/**
 	 * Hides draft offers.
 	 *
 	 * @param array $clauses Clauses.
@@ -828,13 +882,11 @@ final class Offer extends Component {
 
 	/**
 	 * Sets request context.
+	 *
+	 * @param array $context Request context.
+	 * @return array
 	 */
-	public function set_request_context() {
-
-		// Check authentication.
-		if ( ! is_user_logged_in() || hp\is_rest() ) {
-			return;
-		}
+	public function set_request_context( $context ) {
 
 		// Get cached request count.
 		$request_count = hivepress()->cache->get_user_cache( get_current_user_id(), 'request_count', 'models/request' );
@@ -854,7 +906,7 @@ final class Offer extends Component {
 		}
 
 		// Set request context.
-		hivepress()->request->set_context( 'request_count', $request_count );
+		$context['request_count'] = $request_count;
 
 		if ( current_user_can( 'edit_posts' ) ) {
 
@@ -876,8 +928,10 @@ final class Offer extends Component {
 			}
 
 			// Set request context.
-			hivepress()->request->set_context( 'offer_count', $offer_count );
+			$context['offer_count'] = $offer_count;
 		}
+
+		return $context;
 	}
 
 	/**

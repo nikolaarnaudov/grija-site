@@ -58,16 +58,23 @@ final class Request extends Controller {
 					],
 
 					'requests_view_page'           => [
-						'url'    => [ $this, 'get_requests_view_url' ],
-						'match'  => [ $this, 'is_requests_view_page' ],
-						'action' => [ $this, 'render_requests_view_page' ],
+						'url'      => [ $this, 'get_requests_view_url' ],
+						'match'    => [ $this, 'is_requests_view_page' ],
+						'redirect' => [],
+						'action'   => [ $this, 'render_requests_view_page' ],
 					],
 
 					'request_view_page'            => [
 						'url'      => [ $this, 'get_request_view_url' ],
 						'match'    => [ $this, 'is_request_view_page' ],
-						'redirect' => [ $this, 'redirect_request_view_page' ],
 						'action'   => [ $this, 'render_request_view_page' ],
+
+						'redirect' => [
+							[
+								'callback' => [ $this, 'redirect_request_view_page' ],
+								'_order'   => 5,
+							],
+						],
 					],
 
 					'requests_edit_page'           => [
@@ -81,7 +88,13 @@ final class Request extends Controller {
 
 					'request_submit_page'          => [
 						'path'     => '/submit-request',
-						'redirect' => [ $this, 'redirect_request_submit_page' ],
+
+						'redirect' => [
+							[
+								'callback' => [ $this, 'redirect_request_submit_page' ],
+								'_order'   => 5,
+							],
+						],
 					],
 
 					'request_submit_details_page'  => [
@@ -98,6 +111,10 @@ final class Request extends Controller {
 						'path'     => '/complete',
 						'redirect' => [ $this, 'redirect_request_submit_complete_page' ],
 						'action'   => [ $this, 'render_request_submit_complete_page' ],
+					],
+
+					'request_category_view_page'   => [
+						'url' => [ $this, 'get_request_category_view_url' ],
 					],
 				],
 			],
@@ -539,5 +556,15 @@ final class Request extends Controller {
 				],
 			]
 		) )->render();
+	}
+
+	/**
+	 * Gets request category view URL.
+	 *
+	 * @param array $params URL parameters.
+	 * @return string
+	 */
+	public function get_request_category_view_url( $params ) {
+		return get_term_link( hp\get_array_value( $params, 'request_category_id' ) );
 	}
 }
