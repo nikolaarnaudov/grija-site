@@ -137,3 +137,17 @@ add_filter('hivepress/v1/models/vendor/attributes', function ($attributes) {
     }
     return $attributes;
 }, 1000);
+
+/**
+ * Register custom Vendor Details block.
+ */
+add_filter('hivepress/v1/template/blocks', function ($blocks) {
+    $blocks['vendor_details_custom'] = [
+        'label' => 'Vendor Details (Custom)',
+        'context' => ['vendor'],
+        'type' => 'part',
+        'path' => 'vendor/view/block/vendor-details-custom',
+    ];
+
+    return $blocks;
+});
