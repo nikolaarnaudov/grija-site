@@ -22,3 +22,6 @@ wp-content/w3tc-config/
 
 # PHP/Composer (if used later)
 vendor/
+
+# Backups
+wp-content/backups-dup-lite/
